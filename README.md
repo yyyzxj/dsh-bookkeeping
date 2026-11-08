@@ -207,7 +207,7 @@ flowchart LR
 
 **Host 半区**（`index.js`、`ledger.js`）：
 
-- `index.js` 导出 `apply(ctx)`：创建账本实例；通过 `ctx.get('storage')` 打开 `bookkeeping_ledger` KV 单元（不可用时回退 JSON 文件）；通过 `ctx.connection.fetch.register` 注册 exact Fetch 路由（`ROUTE_PATH = /bookkeeping`，由 DSH 挂在浏览器侧的 `GET/POST /api/bookkeeping`，支持 GET / HEAD / POST）；通过 tools 服务注册三个智能体工具；所有变更共用同一 `Ledger` 队列串行执行并持久化。
+- `index.js` 导出 `apply(ctx)`：创建账本实例；通过 `ctx.get('storage')` 打开 `bookkeeping_ledger` KV 单元（不可用时回退 JSON 文件）；通过 `ctx.connection.fetch.register` 注册 exact Fetch 路由（`ROUTE_PATH = /api/bookkeeping`，与浏览器请求的完整路径一致，DSH connection 的 `/api` 前缀是路由键的一部分），支持 GET / HEAD / POST；通过 tools 服务注册三个智能体工具；所有变更共用同一 `Ledger` 队列串行执行并持久化。
 - `ledger.js`：记录模型、校验、金额/日期规范化、汇总与分类聚合、JSON 文件存储适配器（原子写）、KV 单元存储适配器。
 
 **Client 半区**（`client.js`）：
@@ -359,7 +359,7 @@ Preset category ids: `food`, `transport`, `shopping`, `housing`, `entertainment`
 
 ## Architecture
 
-- **Host half** (`index.js`, `ledger.js`): `apply(ctx)` builds the ledger over DSH’s storage service, registers the authenticated exact Fetch route `GET/POST /api/bookkeeping` through `ctx.connection.fetch.register` (`ROUTE_PATH = /bookkeeping`), and registers the three agent tools through the tools service. `ledger.js` holds the model, validation, summaries, and the KV/file persistence adapters. Mutations are serialized through one `Ledger` queue.
+- **Host half** (`index.js`, `ledger.js`): `apply(ctx)` builds the ledger over DSH’s storage service, registers the authenticated exact Fetch route `GET/POST /api/bookkeeping` through `ctx.connection.fetch.register` (`ROUTE_PATH = '/api/bookkeeping'`, the full pathname the shared `/api` handler matches), and registers the three agent tools through the tools service. `ledger.js` holds the model, validation, summaries, and the KV/file persistence adapters. Mutations are serialized through one `Ledger` queue.
 - **Client half** (`client.js`): a lazy `window.__ModuleLoader__.load({ id: 'dsh-bookkeeping', factory(require) })` module that renders with `React.createElement` from the module table’s React — no build step. It registers the `sidebar.panellist` icon (id `bookkeeping`, order 20) and the keyed `main` page `bookkeeping`, uses DSH’s locale service for zh/en strings, and styles with `--dsw-alias-*` theme tokens only.
 - **Bundle declaration**: `cordis.patch.yml` inserts the plugin row `id: bookkeeping`, `name: 'dsh-bookkeeping'`; `locale/*.json` provide display metadata.
 

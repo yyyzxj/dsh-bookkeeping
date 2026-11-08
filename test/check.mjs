@@ -131,7 +131,7 @@ const host = await import('../index.js')
 
 check('host entry exports apply and the route path', () => {
   assert.equal(typeof host.apply, 'function')
-  assert.equal(host.ROUTE_PATH, '/bookkeeping')
+  assert.equal(host.ROUTE_PATH, '/api/bookkeeping')
 })
 
 check('dates validate as real calendar days', () => {

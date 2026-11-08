@@ -20,8 +20,13 @@ import {
   TYPES,
 } from './ledger.js'
 
-/** Exact route path, reached by the browser as `/api/bookkeeping`. */
-export const ROUTE_PATH = '/bookkeeping'
+/**
+ * Exact Fetch-route path. `connection.fetch` matches the request's full
+ * pathname against this key, and DSH mounts that registry under `/api`, so the
+ * `/api` channel prefix is part of the registered path. The browser calls the
+ * same URL (a relative same-origin `/api/bookkeeping`).
+ */
+export const ROUTE_PATH = '/api/bookkeeping'
 
 function jsonResponse(value, status = 200) {
   return new Response(JSON.stringify(value), {
@@ -280,8 +285,10 @@ export function apply(ctx) {
     }
   })
 
-  // Browser API: exact Fetch route under /api, only for authenticated owner
-  // peers (DSH's connection bridge enforces the cookie and Host/Origin trust).
+  // Browser API: exact Fetch route whose path includes the `/api` channel
+  // prefix (the shared handler matches the request's full pathname). Only
+  // authenticated owner peers reach it; DSH's connection bridge enforces the
+  // browser cookie and Host/Origin trust.
   ctx.inject(['connection'], (connectionCtx) => {
     connectionCtx.effect(() => {
       const registration = connectionCtx.connection.fetch.register({

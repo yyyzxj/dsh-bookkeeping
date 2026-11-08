@@ -1,6 +1,6 @@
 {
   "name": "dsh-bookkeeping",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Bookkeeping and expense tracker plugin for DeepSeek Harness: a Ledger panel in the DSH Web UI plus agent tools to record and query income and expenses.",
   "type": "module",
   "license": "MIT",
