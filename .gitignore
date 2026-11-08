@@ -1,0 +1,20 @@
+# Dependencies (this plugin has none at runtime; kept for local tooling)
+node_modules/
+
+# Local reference material / scratch area
+_ref/
+
+# Plugin manager working state
+.plugin-manager/
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+
+# Editor / OS noise
+.DS_Store
+
+# Editor and tool backups
+*.bak-*

@@ -1,0 +1,47 @@
+{
+  "name": "dsh-bookkeeping",
+  "version": "0.1.0",
+  "description": "Bookkeeping and expense tracker plugin for DeepSeek Harness: a Ledger panel in the DSH Web UI plus agent tools to record and query income and expenses.",
+  "type": "module",
+  "license": "MIT",
+  "author": "yyyzxj",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyyzxj/dsh-bookkeeping.git"
+  },
+  "homepage": "https://github.com/yyyzxj/dsh-bookkeeping#readme",
+  "bugs": {
+    "url": "https://github.com/yyyzxj/dsh-bookkeeping/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "bookkeeping",
+    "expense-tracker",
+    "ledger"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "ledger.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
